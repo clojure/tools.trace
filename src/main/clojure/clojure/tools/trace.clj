@@ -49,7 +49,7 @@
 (def ^{:doc "Forms to ignore when tracing forms."}
       ignored-form? '#{def quote var try monitor-enter monitor-exit})
 
-(defn ^{:private true} tracer
+(defn tracer
   "This function is called by trace. Prints to standard output, but
 may be rebound to do anything you like. 'name' is optional."
   [name value]
@@ -64,7 +64,7 @@ affecting the result."
      (tracer name (pr-str value))
      value))
 
-(defn ^{:private true} trace-indent
+(defn trace-indent
   "Returns an indentation string based on *trace-depth*"
   []
   (apply str (take *trace-depth* (repeat "| "))))
