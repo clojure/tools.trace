@@ -1,4 +1,7 @@
 (ns test.clojure.clojure.tools.test-trace
+  "The doc fn is defined in clojure.core in Clojure version 1.2 but
+   defined in clojure.repl in 1.3. Adjust the following
+   use to refere to the proper location depending on the version being used."
   [:use clojure.test clojure.tools.trace [clojure.repl :only [doc]]]
   [:require [clojure.string :as s]])
 
@@ -7,8 +10,6 @@
   "Remove variable output from the trace output and replace end of lines by |"
   [s]
   (s/replace (s/replace s #"t[0-9]+:" "t:#") #"\n" "|"))
-
-
 
 (deftrace fn-a
   "fn-a Doc string"
