@@ -88,4 +88,5 @@ Usage: (trace-forms & body)
 This macro helps identify which nested form triggered a runtime Exception.
 However it will not catch compilation exceptions.
 If a runtime Exception occurs, the message will include a trace back of all the
-nested forms starting with the innermost where the exception occurred.
+nested forms starting with the innermost where the exception occurred plus
+the original exception message.
