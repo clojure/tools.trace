@@ -8,7 +8,7 @@ The trace tool is compatible with Clojure versions 1.2.x and 1.3.
 #Usage:
 
 (ns your-namespace
-  (:require clojure.contrib.trace))
+  (:require tools.trace))
 
 #Overview
 
@@ -80,10 +80,12 @@ Usage: (tracer name value)
 This function is called by trace.  Prints to standard output, but
 may be rebound to do anything you like.  'name' is optional.
 
-##traceforms
+##trace-forms
 macro
 
-Usage: (traceforms & body)
+Usage: (trace-forms & body)
 
-This macro helps identifying which nested form triggered a runtime Exception.
+This macro helps identify which nested form triggered a runtime Exception.
 However it will not catch compilation exceptions.
+If a runtime Exception occurs, the message will include a trace back of all the
+nested forms starting with the innermost where the exception occurred.
