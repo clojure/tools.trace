@@ -1,8 +1,6 @@
 (ns test.clojure.clojure.tools.test-trace
-  "The doc fn is defined in clojure.core in Clojure version 1.2 but
-   defined in clojure.repl in 1.3. Adjust the following
-   use to refere to the proper location depending on the version being used."
-  [:use clojure.test clojure.tools.trace [clojure.repl :only [doc]]]
+  "Tests for tools.trace."
+  [:use [clojure.test] [clojure.tools.trace]]
   [:require [clojure.string :as s]])
 
 (defn ^{:private true}
@@ -29,7 +27,7 @@
   (trace-forms ((fn [] (let [ d (/ 3 0)] d)))))
 
 (deftest test-with-docstring
-  (is (= (.endsWith (cleanup (with-out-str (doc fn-a))) "fn-a Doc string|") true)
+  (is (= (.endsWith (cleanup (:doc (meta (var fn-a)))) "fn-a Doc string") true)
   (is (= (cleanup (with-out-str (fn-a 1 2 3))) "TRACE t:# (fn-a 1 2 3)|TRACE t:# => 6|"))))
 
 (deftest test-no-docstring
