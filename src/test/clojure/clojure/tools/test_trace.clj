@@ -1,4 +1,4 @@
-(ns test.clojure.clojure.tools.test-trace
+(ns clojure.tools.test-trace
   "Tests for tools.trace."
   [:use [clojure.test] [clojure.tools.trace]]
   [:require [clojure.string :as s]])
