@@ -8,7 +8,7 @@ The trace tool is compatible with Clojure versions 1.2.x and 1.3.
 #Usage:
 
 (ns your-namespace
-  (:require tools.trace))
+  (:require clojure.tools.trace))
 
 #Overview
 
