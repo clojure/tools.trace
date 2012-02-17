@@ -44,4 +44,20 @@
 (deftest test-maps
   (is (thrown-with-msg? ArithmeticException #"Divide by zero\n  Form failed: \(/ 3 0\)\n  Form failed: \{:a 1, :b \(/ 3 0\)\}"
                         (trace-forms {:a 1 :b (/ 3 0)}))))
+
+(def trace-ns-test-namespace (create-ns 'trace.test.namesp))
+
+(binding [*ns* trace-ns-test-namespace]
+  (eval '(clojure.core/refer-clojure))
+  (eval '(defn foo [] :foo))
+  (eval '(defn bar [] (foo))))
+
+(deftest test-trace-ns
+  (trace-ns trace-ns-test-namespace)
+  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
+         "TRACE: \"entering: bar\"|TRACE: \"entering: foo\"|"))
+  (untrace-ns trace-ns-test-namespace)
+  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
+         "")))
+
 (run-tests)

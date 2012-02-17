@@ -218,4 +218,73 @@ such as clojure.core/+"
   `(do
      ~@(map trace-form body)))
 
+(defn trace-var
+  "If the specified Var holds an IFn and is not marked as a macro, its
+  contents is replaced with a version wrapped in a tracing call;
+  otherwise nothing happens. Can be undone with untrace-var.
 
+  In the unary case, v should be a Var object or a symbol to be
+  resolved in the current namespace.
+
+  In the binary case, ns should be a namespace object or a symbol
+  naming a namespace and s a symbol to be resolved in that namespace."
+  ([ns s]
+     (trace-var (ns-resolve ns s)))
+  ([v]
+     (let [v  (if (var? v) v (resolve v))
+           ns (.ns v)
+           s  (.sym v)]
+       (if (and (ifn? @v) (-> v meta :macro not))
+         (let [f @v]
+           (intern ns
+                   (with-meta s {::traced f})
+                   (fn tracing-wrapper [& args]
+                     (trace (str "entering: " s))
+                     (apply f args))))))))
+
+(defn untrace-var
+  "Reverses the effect of trace-var / trace-vars / trace-ns for the
+  given Var, replacing the traced function with the original, untraced
+  version."
+  [v]
+  (let [ns (.ns v)
+        s  (.sym v)]
+    (alter-meta! (intern ns s ((meta v) ::traced))
+                 dissoc ::traced)))
+
+(defn trace-vars
+  "Calls trace-var on each of the specified Vars.
+
+  The vs may be Var objects or symbols to be resolved in the current
+  namespace."
+  [& vs]
+  (doseq [v vs]
+    (trace-var v)))
+
+(defn untrace-vars
+  "Reverses the effect of trace-var / trace-vars / trace-ns for each
+  of the vs, replacing the traced functions with the original,
+  untraced versions."
+  [& vs]
+  (doseq [v vs]
+    (untrace-var v)))
+
+(defn trace-ns
+  "Replaces each function from the given namespace with a version wrapped
+  in a tracing call. Can be undone with untrace-ns. ns should be a namespace
+  object or a symbol."
+  [ns]
+  (->> ns
+       ns-interns
+       vals
+       (apply trace-vars)))
+
+(defn untrace-ns
+  "Reverses the effect of trace-var / trace-vars / trace-ns for the
+  Vars in the given namespace, replacing each traced function from the
+  given namespace with the original, untraced version."
+  [ns]
+  (->> ns
+       ns-interns
+       vals
+       (apply untrace-vars)))
