@@ -55,7 +55,7 @@
 (deftest test-trace-ns
   (trace-ns trace-ns-test-namespace)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE: \"entering: bar\"|TRACE: \"entering: foo\"|"))
+         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
   (untrace-ns trace-ns-test-namespace)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
          "")))

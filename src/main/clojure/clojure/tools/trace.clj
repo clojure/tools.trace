@@ -235,12 +235,12 @@ such as clojure.core/+"
            ns (.ns v)
            s  (.sym v)]
        (if (and (ifn? @v) (-> v meta :macro not))
-         (let [f @v]
+         (let [f @v
+               vname (symbol (str ns "/" s))]
            (intern ns
                    (with-meta s {::traced f})
                    (fn tracing-wrapper [& args]
-                     (trace (str "entering: " s))
-                     (apply f args))))))))
+                     (trace-fn-call vname f args))))))))
 
 (defn untrace-var
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
