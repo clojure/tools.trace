@@ -237,20 +237,28 @@ such as clojure.core/+"
        (if (and (ifn? @v) (-> v meta :macro not))
          (let [f @v
                vname (symbol (str ns "/" s))]
-           (intern ns
-                   (with-meta s {::traced f})
-                   (fn tracing-wrapper [& args]
-                     (trace-fn-call vname f args))))))))
+           (doto v
+             (alter-var-root #(fn tracing-wrapper [& args]
+                                (trace-fn-call vname % args)))
+             (alter-meta! assoc ::traced f)))))))
 
 (defn untrace-var
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   given Var, replacing the traced function with the original, untraced
-  version."
-  [v]
-  (let [ns (.ns v)
-        s  (.sym v)]
-    (alter-meta! (intern ns s ((meta v) ::traced))
-                 dissoc ::traced)))
+  version. No-op for non-traced Vars.
+
+  Argument types are the same as those for trace-var."
+  ([ns s]
+     (untrace-var (ns-resolve ns s)))
+  ([v]
+     (let [v (if (var? v) v (resolve v))
+           ns (.ns v)
+           s  (.sym v)
+           f  ((meta v) ::traced)]
+       (when f
+         (doto v
+           (alter-var-root (constantly ((meta v) ::traced)))
+           (alter-meta! dissoc ::traced))))))
 
 (defn trace-vars
   "Calls trace-var on each of the specified Vars.
@@ -272,12 +280,16 @@ such as clojure.core/+"
 (defn trace-ns
   "Replaces each function from the given namespace with a version wrapped
   in a tracing call. Can be undone with untrace-ns. ns should be a namespace
-  object or a symbol."
+  object or a symbol.
+
+  No-op for clojure.core and clojure.tools.trace."
   [ns]
-  (->> ns
-       ns-interns
-       vals
-       (apply trace-vars)))
+  (let [ns (the-ns ns)]
+    (when-not ('#{clojure.core clojure.tools.trace} (.name ns))
+      (->> ns
+           ns-interns
+           vals
+           (apply trace-vars)))))
 
 (defn untrace-ns
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
