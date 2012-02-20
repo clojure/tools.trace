@@ -59,3 +59,7 @@ local.properties
 
 # leinigen
 .lein-deps-sum
+.lein-failures
+project.clj
+lib/**
+
