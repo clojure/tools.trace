@@ -1,92 +1,94 @@
-#API for trace (master branch)
-by Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg
+clojure.tools.trace
+========================================
 
-# Compatibility
+A Clojure trace tool. Defines tracing macros/fns to help you see what your code is doing.
 
-The trace tool is compatible with Clojure versions 1.2.x and 1.3.
-
-#Usage:
-
-(ns your-namespace
-  (:require clojure.tools.trace))
-
-#Overview
-
-This file defines simple "tracing" macros to help you see what your
-code is doing.
+Formerly known as clojure.contrib.trace.
 
 
-#Public Variables and Functions
 
-##*trace-depth*
-var
+Releases and Dependency Information
+========================================
 
-Current stack depth of traced function calls.
+Latest stable release: 0.7.2
 
+* [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
-##deftrace
-macro
+* [Development Snapshot Versions](https://oss.sonatype.org/index.html#nexus-search;gav~org.clojure~tools.trace~~~)
 
-Usage: (deftrace name & definition)
+[Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
-Use in place of defn; traces each call/return of this fn, including
-arguments.  Nested calls to deftrace'd functions will print a
-tree-like structure.
+    [org.clojure/tools.trace "0.7.2"]
+    
+[Maven](http://maven.apache.org/) dependency information:
 
-
-##dotrace
-macro
-
-Usage: (dotrace fnames & exprs)
-
-Given a sequence of function identifiers, evaluate the body
-expressions in an environment in which the identifiers are bound to
-the traced functions.  Does not work on inlined functions,
-such as clojure.core/+
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>tools.trace</artifactId>
+      <version>0.7.2</version>
+    </dependency>
 
 
-##trace
-function
 
-Usage: (trace value)
-       (trace name value)
+Example Usage
+========================================
+(use 'clojure.tools.trace)
 
-Sends name (optional) and value to the tracer function, then
-returns value.  May be wrapped around any expression without
-affecting the result.
+(trace (* 2 3)) ;; To trace a value
 
+(trace tag (* 2 3)) ;; To trace a value and assign a trace tag
 
-##trace-fn-call
-function
+(deftrace fubar [x v] (+ x v)) ;; To trace a function call and its return value
 
-Usage: (trace-fn-call name f args)
+(trace-form (/ 1 0)) ;; To trace exceptions thrown within a form
 
-Traces a single call to a function f with args.  'name' is the
-symbol name of the function.
+or
 
-##trace-indent
-function
+(trace-forms (+ 1 3) (* 5 6) (/ 1 0))
 
-Usage: (trace-indent)
-
-Returns an indentation string based on *trace-depth*
+(trace-ns 'myown.namespace) ;; To trace/untrace all fns in a name space
+(untrace-ns 'myown.namespace)
 
 
-##tracer
-function
 
-Usage: (tracer name value)
+Developer Information
+========================================
 
-This function is called by trace.  Prints to standard output, but
-may be rebound to do anything you like.  'name' is optional.
+* [GitHub project](https://github.com/clojure/tools.trace)
 
-##trace-forms
-macro
+* [Bug Tracker](http://dev.clojure.org/jira/browse/TTRACE)
 
-Usage: (trace-forms & body)
+* [Continuous Integration](http://build.clojure.org/job/tools.trace/)
 
-This macro helps identify which nested form triggered a runtime Exception.
-However it will not catch compilation exceptions.
-If a runtime Exception occurs, the message will include a trace back of all the
-nested forms starting with the innermost one where the exception occurred plus
-the original exception message.
+* [http://build.clojure.org/job/tools.trace-test-matrix/)
+
+
+
+Change Log
+====================
+
+* Release 0.7.2 Feb. 20, 2012: Luc Préfontaine
+  * added contribution from Michał Marczyk to allow dynamic tracing of fn vars and all fns in a given namespace.
+* Release 0.7.1 on 2011-09-18
+  * moved it to new contrib modular struct
+  * made it 1.2/1.3 compliant
+  * supported doc strings
+  * added a trace-form macro, from Jonathan Fischer
+* Changes from clojure.trace
+  * replaced *trace-out* with tracer
+  * made trace a function instead of a macro (suggestion from Stuart Halloway)
+  * added trace-fn-call
+
+
+
+Copyright and License
+========================================
+
+Copyright (c) Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, 2011-2012.
+All rights reserved.
+The use and distribution terms for this software are covered by the Eclipse Public
+License 1.0 (http://opensource.org/licenses/eclipse-1.0.php) which can
+be found in the file epl-v10.html at the root of this distribution.
+By using this software in any fashion, you are agreeing to be bound by
+the terms of this license.  You must not remove this notice, or any
+other, from this software.
