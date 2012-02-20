@@ -17,6 +17,10 @@
 ;;
 ;;  CHANGE LOG
 ;;
+;;  Feb. 20, 2012: Luc Préfontaine
+;;
+;;  * added contribution from Michał Marczyk to allow dynamic tracing of fn vars and all fns in a given namespace.
+;;
 ;;  Sept 18, 2011: Luc Préfontaine
 ;;
 ;;  * moved it to new contrib modular struct
@@ -189,7 +193,7 @@ such as clojure.core/+"
           sform)))
     (trace-value form)))
 
-(defn trace-compose-exception 
+(defn ^{:private true} trace-compose-exception 
   "Re-create a new exception with a composed message from the given exception
    and the message to be added. The exception stack trace is kept at a minimum."
   [exception message]
@@ -218,7 +222,7 @@ such as clojure.core/+"
   `(do
      ~@(map trace-form body)))
 
-(defn trace-var
+(defn ^{:private true} trace-var
   "If the specified Var holds an IFn and is not marked as a macro, its
   contents is replaced with a version wrapped in a tracing call;
   otherwise nothing happens. Can be undone with untrace-var.
@@ -242,7 +246,7 @@ such as clojure.core/+"
                                 (trace-fn-call vname % args)))
              (alter-meta! assoc ::traced f)))))))
 
-(defn untrace-var
+(defn ^{:private true} untrace-var
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   given Var, replacing the traced function with the original, untraced
   version. No-op for non-traced Vars.
@@ -260,7 +264,7 @@ such as clojure.core/+"
            (alter-var-root (constantly ((meta v) ::traced)))
            (alter-meta! dissoc ::traced))))))
 
-(defn trace-vars
+(defn ^{:private true} trace-vars
   "Calls trace-var on each of the specified Vars.
 
   The vs may be Var objects or symbols to be resolved in the current
@@ -269,7 +273,7 @@ such as clojure.core/+"
   (doseq [v vs]
     (trace-var v)))
 
-(defn untrace-vars
+(defn ^{:private true} untrace-vars
   "Reverses the effect of trace-var / trace-vars / trace-ns for each
   of the vs, replacing the traced functions with the original,
   untraced versions."
