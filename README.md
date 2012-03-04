@@ -10,7 +10,7 @@ Formerly known as clojure.contrib.trace.
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.7.2
+Latest stable release: 0.7.1
 
 * [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
