@@ -53,13 +53,13 @@
   (eval '(defn bar [] (foo))))
 
 (deftest test-trace-foo
-  (trace-var trace.test.namesp/bar)
+  (trace-vars trace.test.namesp/bar)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
          "TRACE t:# (trace.test.namesp/bar)|TRACE t:# => :foo|"))
-  (untrace-var trace.test.namesp/bar)
+  (untrace-vars trace.test.namesp/bar)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
 
-(deftest test-trace-vars
+(deftest test-trace-all
   (trace-vars trace.test.namesp/bar trace.test.namesp/foo)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
          "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))

@@ -268,21 +268,6 @@ such as clojure.core/+"
            (alter-var-root (constantly ((meta v) ::traced)))
            (alter-meta! dissoc ::traced))))))
 
-
-(defmacro trace-var
-  "Wrapping trace-var* macro to prevent caller from quoting."
-  ([ns s]
-  `(trace-var* ns (quote ~s)))
-  ([s]
-  `(trace-var* (quote ~s))))
-
-(defmacro untrace-var
-  "Wrapping untrace-var* macro to prevent caller from quoting."
-  ([ns s]
-  `(untrace-var* ns (quote ~s)))
-  ([s]
-  `(untrace-var* (quote ~s))))
-
 (defmacro trace-vars
   "Macro to wrap calls to trace-var* on each of the specified Vars.
   The vs may be Var objects or symbols to be resolved in the current
