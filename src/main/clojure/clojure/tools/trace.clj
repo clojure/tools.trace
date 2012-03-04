@@ -17,9 +17,13 @@
 ;;
 ;;  CHANGE LOG
 ;;
+;;  March 4, 2012: Luc Préfontaine
+;;
+;;  * added macro wrappers around fns allowing dynamic tracing.
+;;
 ;;  Feb. 20, 2012: Luc Préfontaine
 ;;
-;;  * added contribution from Michał Marczyk to allow dynamic tracing of fn vars and all fns in a given namespace.
+;;  * added contribution from Michał Marczyk and Don jackson to allow dynamic tracing of fns in a namespace.
 ;;
 ;;  Sept 18, 2011: Luc Préfontaine
 ;;
@@ -42,7 +46,7 @@
 ;; 
 ;;  June 9, 2008: first version
 ;;;
-(ns ^{:author "Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg"
+(ns ^{:author "Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, Don Jackson"
       :doc "This file defines simple tracing macros to help you see what your code is doing."}
      clojure.tools.trace
   (:use [clojure.pprint]))
@@ -222,7 +226,7 @@ such as clojure.core/+"
   `(do
      ~@(map trace-form body)))
 
-(defn trace-var
+(defn trace-var*
   "If the specified Var holds an IFn and is not marked as a macro, its
   contents is replaced with a version wrapped in a tracing call;
   otherwise nothing happens. Can be undone with untrace-var.
@@ -233,7 +237,7 @@ such as clojure.core/+"
   In the binary case, ns should be a namespace object or a symbol
   naming a namespace and s a symbol to be resolved in that namespace."
   ([ns s]
-     (trace-var (ns-resolve ns s)))
+     (trace-var* (ns-resolve ns s)))
   ([v]
      (let [v  (if (var? v) v (resolve v))
            ns (.ns v)
@@ -246,14 +250,14 @@ such as clojure.core/+"
                                 (trace-fn-call vname % args)))
              (alter-meta! assoc ::traced f)))))))
 
-(defn untrace-var
+(defn untrace-var*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   given Var, replacing the traced function with the original, untraced
   version. No-op for non-traced Vars.
 
   Argument types are the same as those for trace-var."
   ([ns s]
-     (untrace-var (ns-resolve ns s)))
+     (untrace-var* (ns-resolve ns s)))
   ([v]
      (let [v (if (var? v) v (resolve v))
            ns (.ns v)
@@ -264,24 +268,37 @@ such as clojure.core/+"
            (alter-var-root (constantly ((meta v) ::traced)))
            (alter-meta! dissoc ::traced))))))
 
-(defn trace-vars
-  "Calls trace-var on each of the specified Vars.
 
+(defmacro trace-var
+  "Wrapping trace-var* macro to prevent caller from quoting."
+  ([ns s]
+  `(trace-var* ns (quote ~s)))
+  ([s]
+  `(trace-var* (quote ~s))))
+
+(defmacro untrace-var
+  "Wrapping untrace-var* macro to prevent caller from quoting."
+  ([ns s]
+  `(untrace-var* ns (quote ~s)))
+  ([s]
+  `(untrace-var* (quote ~s))))
+
+(defmacro trace-vars
+  "Macro to wrap calls to trace-var* on each of the specified Vars.
   The vs may be Var objects or symbols to be resolved in the current
   namespace."
   [& vs]
-  (doseq [v vs]
-    (trace-var v)))
+  `(do ~@(for [x vs] `(trace-var* (quote ~x)))))
 
-(defn untrace-vars
-  "Reverses the effect of trace-var / trace-vars / trace-ns for each
+(defmacro untrace-vars
+  "Macro to wrap calls to untrace-var* on each of the specified Vars.
+  Reverses the effect of trace-var / trace-vars / trace-ns for each
   of the vs, replacing the traced functions with the original,
   untraced versions."
   [& vs]
-  (doseq [v vs]
-    (untrace-var v)))
+ `(do ~@(for [x vs] `(untrace-var* (quote ~x)))))
 
-(defn trace-ns
+(defn trace-ns*
   "Replaces each function from the given namespace with a version wrapped
   in a tracing call. Can be undone with untrace-ns. ns should be a namespace
   object or a symbol.
@@ -290,17 +307,27 @@ such as clojure.core/+"
   [ns]
   (let [ns (the-ns ns)]
     (when-not ('#{clojure.core clojure.tools.trace} (.name ns))
-      (->> ns
-           ns-interns
-           vals
-           (apply trace-vars)))))
+      (let [ns-fns (->> ns ns-interns vals)]
+        (doseq [f ns-fns]
+          (trace-var* f))))))
 
-(defn untrace-ns
+(defmacro trace-ns
+  "Macro to wrap calls to trace-ns*, avoids quoting of the name space argument"
+  [ns]
+  `(trace-ns* ~ns)) 
+
+(defn untrace-ns*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   Vars in the given namespace, replacing each traced function from the
   given namespace with the original, untraced version."
   [ns]
-  (->> ns
-       ns-interns
-       vals
-       (apply untrace-vars)))
+  (let [ns-fns (->> ns the-ns ns-interns vals)]
+    (doseq [f ns-fns]
+          (untrace-var* f))))
+
+(defmacro untrace-ns
+  "Macro to wrap calls to trace-ns*, avoids quoting of the name space argument"
+  [ns]
+  `(untrace-ns* ~ns)) 
+
+

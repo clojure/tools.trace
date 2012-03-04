@@ -67,8 +67,11 @@ Developer Information
 Change Log
 ====================
 
+* Release 0.7.3 March 4, 2012: Luc Préfontaine
+  * added macro wrappers around fns allowing dynamic tracing.
+
 * Release 0.7.2 Feb. 20, 2012: Luc Préfontaine
-  * added contribution from Michał Marczyk to allow dynamic tracing of fn vars and all fns in a given namespace.
+  * added contribution from Michał Marczyk and Don Jackson to allow dynamic tracing of fn vars and all fns in a given namespace.
 * Release 0.7.1 on 2011-09-18
   * moved it to new contrib modular struct
   * made it 1.2/1.3 compliant
