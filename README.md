@@ -47,9 +47,11 @@ or
 (trace-forms (+ 1 3) (* 5 6) (/ 1 0))
 
 (trace-ns myown.namespace) ;; To trace/untrace all fns in a name space
+
 (untrace-ns myown.namespace)
 
 (trace-vars myown.namespace/fubar) ;; To trace specific fns
+
 (untrace-vars myown.namespace/fubar) ;; To untrace specific fns
 
 
