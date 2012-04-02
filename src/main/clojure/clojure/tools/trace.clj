@@ -221,12 +221,12 @@ such as clojure.core/+"
          (throw (trace-compose-exception e# (format "  Form failed: %s" (with-out-str (pprint '~form)))))))))
 
 (defmacro trace-forms
-  "Trace all the forms in the given body."
+  "Trace all the forms in the given body. Returns any underlying uncaught exceptions that may make the forms fail."
   [& body]
   `(do
      ~@(map trace-form body)))
 
-(defn ^{:skipwiki true} trace-var*
+(defn ^{:skip-wiki true} trace-var*
   "If the specified Var holds an IFn and is not marked as a macro, its
   contents is replaced with a version wrapped in a tracing call;
   otherwise nothing happens. Can be undone with untrace-var.
@@ -250,7 +250,7 @@ such as clojure.core/+"
                                 (trace-fn-call vname % args)))
              (alter-meta! assoc ::traced f)))))))
 
-(defn ^{:skipwiki true} untrace-var*
+(defn ^{:skip-wiki true} untrace-var*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   given Var, replacing the traced function with the original, untraced
   version. No-op for non-traced Vars.
