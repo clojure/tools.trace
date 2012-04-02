@@ -46,7 +46,7 @@
 ;; 
 ;;  June 9, 2008: first version
 ;;;
-(ns ^{:author "Stuart Sierra, Michel Salim, Luc Prefontaine, Jonathan Fischer Friberg, Michał Marczyk, Don Jackson"
+(ns ^{:author "Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, Don Jackson"
       :doc "This file defines simple tracing macros to help you see what your code is doing."}
      clojure.tools.trace
   (:use [clojure.pprint]))
