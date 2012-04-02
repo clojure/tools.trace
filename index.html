@@ -69,16 +69,10 @@ namespace.
       <a class="toc-entry-anchor" href="#clojure.tools.trace/trace-ns">trace-ns</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
-      <a class="toc-entry-anchor" href="#clojure.tools.trace/trace-var*">trace-var*</a>
-      
-    </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.tools.trace/trace-vars">trace-vars</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.tools.trace/untrace-ns">untrace-ns</a>
-      
-    </div><div style="margin-left: 1em;" class="toc-entry">
-      <a class="toc-entry-anchor" href="#clojure.tools.trace/untrace-var*">untrace-var*</a>
       
     </div><div style="margin-left: 1em;" class="toc-entry">
       <a class="toc-entry-anchor" href="#clojure.tools.trace/untrace-vars">untrace-vars</a>
@@ -118,7 +112,7 @@ tree-like structure.
 The first argument of the form definition can be a doc string</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L91" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L91" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -132,7 +126,7 @@ the traced functions. Does not work on inlined functions,
 such as clojure.core/+</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L105" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L105" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -146,7 +140,7 @@ returns value. May be wrapped around any expression without
 affecting the result.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L66" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L66" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -154,10 +148,10 @@ affecting the result.</pre>
     <span id="var-type">macro</span><br />
     <pre id="var-usage">Usage: (trace-forms &amp; body)
 </pre>
-    <pre id="var-docstr">Trace all the forms in the given body.</pre>
+    <pre id="var-docstr">Trace all the forms in the given body. Returns any underlying uncaught exceptions that may make the forms fail.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L223" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L223" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -168,27 +162,7 @@ affecting the result.</pre>
     <pre id="var-docstr">Trace all fns in the given name space.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L299" id="var-source">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
-    <h2 id="clojure.tools.trace/trace-var*">trace-var*</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (trace-var* ns s)
-       (trace-var* v)
-</pre>
-    <pre id="var-docstr">If the specified Var holds an IFn and is not marked as a macro, its
-contents is replaced with a version wrapped in a tracing call;
-otherwise nothing happens. Can be undone with untrace-var.
-
-In the unary case, v should be a Var object or a symbol to be
-resolved in the current namespace.
-
-In the binary case, ns should be a namespace object or a symbol
-naming a namespace and s a symbol to be resolved in that namespace.</pre>
-    
-    
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L229" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L299" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -201,7 +175,7 @@ The arguments may be Var objects or symbols to be resolved in the current
 namespace.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L271" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L271" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -212,23 +186,7 @@ namespace.</pre>
     <pre id="var-docstr">Untrace all fns in the given name space.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L313" id="var-source">Source</a>
-  </div><div id="var-entry">
-    <br />
-    <hr />
-    <h2 id="clojure.tools.trace/untrace-var*">untrace-var*</h2>
-    <span id="var-type">function</span><br />
-    <pre id="var-usage">Usage: (untrace-var* ns s)
-       (untrace-var* v)
-</pre>
-    <pre id="var-docstr">Reverses the effect of trace-var / trace-vars / trace-ns for the
-given Var, replacing the traced function with the original, untraced
-version. No-op for non-traced Vars.
-
-Argument types are the same as those for trace-var.</pre>
-    
-    
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L253" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L313" id="var-source">Source</a>
   </div><div id="var-entry">
     <br />
     <hr />
@@ -242,7 +200,7 @@ of the arguments, replacing the traced functions with the original,
 untraced versions.</pre>
     
     
-    <a href="https://github.com/clojure/tools.trace/blob/14849ddb99de5e8c474a9758c9f52b8bdeebd576/src/main/clojure/clojure/tools/trace.clj#L278" id="var-source">Source</a>
+    <a href="https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L278" id="var-source">Source</a>
   </div>
 </div>
 
