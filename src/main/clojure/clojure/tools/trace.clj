@@ -46,18 +46,18 @@
 ;; 
 ;;  June 9, 2008: first version
 ;;;
-(ns ^{:author "Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, Don Jackson"
+(ns ^{:author "Stuart Sierra, Michel Salim, Luc Prefontaine, Jonathan Fischer Friberg, Michał Marczyk, Don Jackson"
       :doc "This file defines simple tracing macros to help you see what your code is doing."}
      clojure.tools.trace
   (:use [clojure.pprint]))
 
-(def ^{:doc "Current stack depth of traced function calls." :dynamic true}
+(def ^{:doc "Current stack depth of traced function calls." :private true :dynamic true}
       *trace-depth* 0)
 
-(def ^{:doc "Forms to ignore when tracing forms."}
+(def ^{:doc "Forms to ignore when tracing forms." :private true}
       ignored-form? '#{def quote var try monitor-enter monitor-exit})
 
-(defn tracer
+(defn ^{:private true} tracer
   "This function is called by trace. Prints to standard output, but
 may be rebound to do anything you like. 'name' is optional."
   [name value]
@@ -72,12 +72,12 @@ affecting the result."
      (tracer name (pr-str value))
      value))
 
-(defn trace-indent
+(defn ^{:private true} trace-indent
   "Returns an indentation string based on *trace-depth*"
   []
   (apply str (take *trace-depth* (repeat "| "))))
 
-(defn trace-fn-call
+(defn ^{:skip-wiki true} trace-fn-call
   "Traces a single call to a function f with args. 'name' is the
 symbol name of the function."
   [name f args]
@@ -197,7 +197,7 @@ such as clojure.core/+"
           sform)))
     (trace-value form)))
 
-(defn trace-compose-exception 
+(defn ^{:skip-wiki true} trace-compose-exception 
   "Re-create a new exception with a composed message from the given exception
    and the message to be added. The exception stack trace is kept at a minimum."
   [exception message]
@@ -210,7 +210,7 @@ such as clojure.core/+"
         _ (.setStackTrace new-exception new-stack-trace)]
      new-exception))
 
-(defn trace-form
+(defn ^{:skip-wiki true} trace-form
   "Trace the given form avoiding try catch when recur is present in the form."
   [form]
   (if (recurs? form)
@@ -226,7 +226,7 @@ such as clojure.core/+"
   `(do
      ~@(map trace-form body)))
 
-(defn trace-var*
+(defn ^{:skipwiki true} trace-var*
   "If the specified Var holds an IFn and is not marked as a macro, its
   contents is replaced with a version wrapped in a tracing call;
   otherwise nothing happens. Can be undone with untrace-var.
@@ -250,7 +250,7 @@ such as clojure.core/+"
                                 (trace-fn-call vname % args)))
              (alter-meta! assoc ::traced f)))))))
 
-(defn untrace-var*
+(defn ^{:skipwiki true} untrace-var*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   given Var, replacing the traced function with the original, untraced
   version. No-op for non-traced Vars.
@@ -269,21 +269,21 @@ such as clojure.core/+"
            (alter-meta! dissoc ::traced))))))
 
 (defmacro trace-vars
-  "Macro to wrap calls to trace-var* on each of the specified Vars.
-  The vs may be Var objects or symbols to be resolved in the current
+  "Trace each of the specified Vars.
+  The arguments may be Var objects or symbols to be resolved in the current
   namespace."
   [& vs]
   `(do ~@(for [x vs] `(trace-var* (quote ~x)))))
 
 (defmacro untrace-vars
-  "Macro to wrap calls to untrace-var* on each of the specified Vars.
+  "Untrace each of the specified Vars.
   Reverses the effect of trace-var / trace-vars / trace-ns for each
-  of the vs, replacing the traced functions with the original,
+  of the arguments, replacing the traced functions with the original,
   untraced versions."
   [& vs]
  `(do ~@(for [x vs] `(untrace-var* (quote ~x)))))
 
-(defn trace-ns*
+(defn ^{:skip-wiki true} trace-ns*
   "Replaces each function from the given namespace with a version wrapped
   in a tracing call. Can be undone with untrace-ns. ns should be a namespace
   object or a symbol.
@@ -297,11 +297,11 @@ such as clojure.core/+"
           (trace-var* f))))))
 
 (defmacro trace-ns
-  "Macro to wrap calls to trace-ns*, avoids quoting of the name space argument"
+  "Trace all fns in the given name space."
   [ns]
   `(trace-ns* ~ns)) 
 
-(defn untrace-ns*
+(defn ^{:skip-wiki true} untrace-ns*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
   Vars in the given namespace, replacing each traced function from the
   given namespace with the original, untraced version."
@@ -311,7 +311,7 @@ such as clojure.core/+"
           (untrace-var* f))))
 
 (defmacro untrace-ns
-  "Macro to wrap calls to trace-ns*, avoids quoting of the name space argument"
+  "Untrace all fns in the given name space."
   [ns]
   `(untrace-ns* ~ns)) 
 
