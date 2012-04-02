@@ -10,7 +10,7 @@ Formerly known as clojure.contrib.trace.
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.7.1
+Latest stable release: 0.7.3
 
 * [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
@@ -18,7 +18,7 @@ Latest stable release: 0.7.1
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
-    [org.clojure/tools.trace "0.7.2"]
+    [org.clojure/tools.trace "0.7.3"]
     
 [Maven](http://maven.apache.org/) dependency information:
 
@@ -40,15 +40,11 @@ Example Usage
 
 (deftrace fubar [x v] (+ x v)) ;; To trace a function call and its return value
 
-(trace-form (/ 1 0)) ;; To trace exceptions thrown within a form
-
-or
-
 (trace-forms (+ 1 3) (* 5 6) (/ 1 0))
 
-(trace-ns myown.namespace) ;; To trace/untrace all fns in a name space (untrace-ns myown.namespace)
+(trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
 
-(trace-vars myown.namespace/fubar) ;; To trace/untrace specific fns (untrace-vars myown.namespace/fubar)
+(trace-vars myown.namespace/fubar) ;; To dynamically trace/untrace specific fns (untrace-vars myown.namespace/fubar)
 
 
 Developer Information
