@@ -18,7 +18,9 @@ Latest stable release: 0.7.3
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
+```clojure
     [org.clojure/tools.trace "0.7.3"]
+```
     
 [Maven](http://maven.apache.org/) dependency information:
 ```xml
