@@ -21,17 +21,19 @@ Latest stable release: 0.7.3
     [org.clojure/tools.trace "0.7.3"]
     
 [Maven](http://maven.apache.org/) dependency information:
-
+```xml
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
       <version>0.7.2</version>
     </dependency>
+```
 
 
 
 Example Usage
 ========================================
+```clojure
 (use 'clojure.tools.trace)
 
 (trace (* 2 3)) ;; To trace a value
@@ -45,6 +47,8 @@ Example Usage
 (trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
 
 (trace-vars myown.namespace/fubar) ;; To dynamically trace/untrace specific fns (untrace-vars myown.namespace/fubar)
+```
+
 
 
 Developer Information
