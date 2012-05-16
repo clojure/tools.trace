@@ -32,6 +32,7 @@ Latest stable release: 0.7.3
 
 Example Usage
 ========================================
+```clojure
 (use 'clojure.tools.trace)
 
 (trace (* 2 3)) ;; To trace a value
@@ -45,7 +46,7 @@ Example Usage
 (trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
 
 (trace-vars myown.namespace/fubar) ;; To dynamically trace/untrace specific fns (untrace-vars myown.namespace/fubar)
-
+```
 
 Developer Information
 ========================================
