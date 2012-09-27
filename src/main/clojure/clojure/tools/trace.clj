@@ -299,7 +299,7 @@ such as clojure.core/+"
 (defmacro trace-ns
   "Trace all fns in the given name space."
   [ns]
-  `(trace-ns* ~ns)) 
+  `(trace-ns* ns)) 
 
 (defn ^{:skip-wiki true} untrace-ns*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
@@ -313,6 +313,6 @@ such as clojure.core/+"
 (defmacro untrace-ns
   "Untrace all fns in the given name space."
   [ns]
-  `(untrace-ns* ~ns)) 
+  `(untrace-ns* ns)) 
 
 
