@@ -200,12 +200,12 @@ such as clojure.core/+"
 (defn ^{:skip-wiki true} trace-compose-exception 
   "Re-create a new exception with a composed message from the given exception
    and the message to be added. The exception stack trace is kept at a minimum."
-  [exception message]
+  [^Exception exception ^String message]
   (let [klass  (class exception) 
         previous-msg (.getMessage exception)
         composed-msg(str previous-msg (if-not (.endsWith previous-msg "\n") "\n") message (if-not (.endsWith message "\n") "\n"))
         ctor (.getConstructor klass (into-array [java.lang.String]))
-        new-exception (cast klass (.newInstance ctor (into-array String [composed-msg])))
+        new-exception ^Exception (cast klass (.newInstance ctor (into-array String [composed-msg])))
         new-stack-trace (into-array java.lang.StackTraceElement [(aget (.getStackTrace exception) 0)])
         _ (.setStackTrace new-exception new-stack-trace)]
      new-exception))
@@ -239,7 +239,7 @@ such as clojure.core/+"
   ([ns s]
      (trace-var* (ns-resolve ns s)))
   ([v]
-     (let [v  (if (var? v) v (resolve v))
+     (let [^clojure.lang.Var v (if (var? v) v (resolve v))
            ns (.ns v)
            s  (.sym v)]
        (if (and (ifn? @v) (-> v meta :macro not))
@@ -259,7 +259,7 @@ such as clojure.core/+"
   ([ns s]
      (untrace-var* (ns-resolve ns s)))
   ([v]
-     (let [v (if (var? v) v (resolve v))
+     (let [^clojure.lang.Var v (if (var? v) v (resolve v))
            ns (.ns v)
            s  (.sym v)
            f  ((meta v) ::traced)]
