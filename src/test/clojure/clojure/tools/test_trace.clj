@@ -27,7 +27,7 @@
   (trace-forms ((fn [] (let [ d (/ 3 0)] d)))))
 
 (deftest test-with-docstring
-  (is (= (.endsWith (cleanup (:doc (meta (var fn-a)))) "fn-a Doc string") true)
+  (is (= (.endsWith ^String (cleanup (:doc (meta (var fn-a)))) "fn-a Doc string") true)
   (is (= (cleanup (with-out-str (fn-a 1 2 3))) "TRACE t:# (fn-a 1 2 3)|TRACE t:# => 6|"))))
 
 (deftest test-no-docstring
@@ -62,7 +62,7 @@
 (deftest test-trace-all
   (trace-vars trace.test.namesp/bar trace.test.namesp/foo)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
+         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|" ))
   (untrace-vars trace.test.namesp/bar trace.test.namesp/foo)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
 
@@ -72,5 +72,14 @@
          "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
   (untrace-ns trace-ns-test-namespace)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+
+(deftest istraced
+  (is (not (traced? 'trace.test.namesp/bar)))
+  (trace-vars trace.test.namesp/bar)
+  (is (traced? 'trace.test.namesp/bar))
+  (untrace-vars trace.test.namesp/bar))
+
+(deftest istraceable
+  (is (traceable? 'trace.test.namesp/bar)))
 
 (run-tests)
