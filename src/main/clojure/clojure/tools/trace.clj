@@ -313,6 +313,18 @@ such as clojure.core/+"
 (defmacro untrace-ns
   "Untrace all fns in the given name space."
   [ns]
-  `(untrace-ns* ~ns)) 
+  `(untrace-ns* ~ns))
+
+(defn traced?
+  "Returns true if the given var is currently traced, false otherwise"
+  [v]
+  (let [^clojure.lang.Var v (if (var? v) v (resolve v))]
+    (-> v meta ::traced nil? not)))
+ 
+(defn traceable?
+  "Returns true if the given var can be traced, false otherwise"
+  [v]
+  (let [^clojure.lang.Var v (if (var? v) v (resolve v))]
+    (and (ifn? @v) (-> v meta :macro not))))
 
 
