@@ -1,6 +1,6 @@
 {:namespaces
  ({:source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace/clojure.tools.trace-api.html",
    :name "clojure.tools.trace",
@@ -13,9 +13,9 @@
    :name "deftrace",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L91",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L91",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/deftrace",
    :doc
@@ -27,9 +27,9 @@
    :name "dotrace",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L105",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L105",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/dotrace",
    :doc
@@ -41,9 +41,9 @@
    :name "trace",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L66",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L66",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/trace",
    :doc
@@ -55,9 +55,9 @@
    :name "trace-forms",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L223",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L223",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/trace-forms",
    :doc
@@ -69,9 +69,9 @@
    :name "trace-ns",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L299",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L299",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/trace-ns",
    :doc "Trace all fns in the given name space.",
@@ -82,9 +82,9 @@
    :name "trace-vars",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L271",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L271",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/trace-vars",
    :doc
@@ -92,13 +92,40 @@
    :var-type "macro",
    :line 271,
    :file "src/main/clojure/clojure/tools/trace.clj"}
+  {:arglists ([v]),
+   :name "traceable?",
+   :namespace "clojure.tools.trace",
+   :source-url
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L324",
+   :raw-source-url
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
+   :wiki-url
+   "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/traceable?",
+   :doc "Returns true if the given var can be traced, false otherwise",
+   :var-type "function",
+   :line 324,
+   :file "src/main/clojure/clojure/tools/trace.clj"}
+  {:arglists ([v]),
+   :name "traced?",
+   :namespace "clojure.tools.trace",
+   :source-url
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L318",
+   :raw-source-url
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
+   :wiki-url
+   "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/traced?",
+   :doc
+   "Returns true if the given var is currently traced, false otherwise",
+   :var-type "function",
+   :line 318,
+   :file "src/main/clojure/clojure/tools/trace.clj"}
   {:arglists ([ns]),
    :name "untrace-ns",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L313",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L313",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/untrace-ns",
    :doc "Untrace all fns in the given name space.",
@@ -109,9 +136,9 @@
    :name "untrace-vars",
    :namespace "clojure.tools.trace",
    :source-url
-   "https://github.com/clojure/tools.trace/blob/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj#L278",
+   "https://github.com/clojure/tools.trace/blob/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj#L278",
    :raw-source-url
-   "https://github.com/clojure/tools.trace/raw/623071f2c533b8b1a042a1d5f4b0bb4205f2e3ff/src/main/clojure/clojure/tools/trace.clj",
+   "https://github.com/clojure/tools.trace/raw/140724fb3001dae34e6c073e9ca22fa8a0da0d2e/src/main/clojure/clojure/tools/trace.clj",
    :wiki-url
    "http://clojure.github.com/tools.trace//clojure.tools.trace-api.html#clojure.tools.trace/untrace-vars",
    :doc
