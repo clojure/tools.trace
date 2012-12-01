@@ -10,7 +10,7 @@ Formerly known as clojure.contrib.trace.
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.7.3
+Latest stable release: 0.7.5
 
 * [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
@@ -19,7 +19,7 @@ Latest stable release: 0.7.3
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
-    [org.clojure/tools.trace "0.7.3"]
+    [org.clojure/tools.trace "0.7.5"]
 ```
     
 [Maven](http://maven.apache.org/) dependency information:
@@ -49,6 +49,7 @@ Example Usage
 (trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
 
 (trace-vars myown.namespace/fubar) ;; To dynamically trace/untrace specific fns (untrace-vars myown.namespace/fubar)
+ 
 ```
 
 
@@ -69,6 +70,13 @@ Developer Information
 Change Log
 ====================
 
+* Release 0.7.5 Dec 1, 2012: Luc Préfontaine
+  * Fixed README and comments in source file
+
+* Release 0.7.4 Dec 1, 2012: Luc Préfontaine
+  * added traced? and traceable/ fns
+  * removed reflection warnings
+  
 * Release 0.7.3 March 4, 2012: Luc Préfontaine
   * added macro wrappers around fns allowing dynamic tracing.
 

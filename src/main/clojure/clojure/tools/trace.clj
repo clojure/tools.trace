@@ -17,6 +17,12 @@
 ;;
 ;;  CHANGE LOG
 ;;
+;;  December 1st, 2012: Luc Préfontaine
+;;
+;;  * fixed changelog and readme
+;;  * added traced? and traceable/ fns
+;;  * removed reflection warnings
+;;
 ;;  March 4, 2012: Luc Préfontaine
 ;;
 ;;  * added macro wrappers around fns allowing dynamic tracing.
