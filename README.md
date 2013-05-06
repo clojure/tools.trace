@@ -27,7 +27,7 @@ Latest stable release: 0.7.5
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
-      <version>0.7.2</version>
+      <version>0.7.5</version>
     </dependency>
 ```
 
