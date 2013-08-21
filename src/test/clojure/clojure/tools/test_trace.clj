@@ -45,6 +45,10 @@
   (is (thrown-with-msg? ArithmeticException #"Divide by zero\n  Form failed: \(/ 3 0\)\n  Form failed: \{:a 1, :b \(/ 3 0\)\}"
                         (trace-forms {:a 1 :b (/ 3 0)}))))
 
+(deftest test-assert
+  (is (thrown-with-msg? AssertionError #"Assert failed: \(\= 2 3\)\n  Form failed: \(assert \(\= 2 3\)\)"
+                        (trace-forms (assert (= 2 3))))))
+
 (def trace-ns-test-namespace (create-ns 'trace.test.namesp))
 
 (binding [*ns* trace-ns-test-namespace]

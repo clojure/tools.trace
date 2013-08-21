@@ -61,7 +61,7 @@
       *trace-depth* 0)
 
 (def ^{:doc "Forms to ignore when tracing forms." :private true}
-      ignored-form? '#{def quote var try monitor-enter monitor-exit})
+      ignored-form? '#{def quote var try monitor-enter monitor-exit assert})
 
 (defn ^{:private true} tracer
   "This function is called by trace. Prints to standard output, but
@@ -206,12 +206,14 @@ such as clojure.core/+"
 (defn ^{:skip-wiki true} trace-compose-exception 
   "Re-create a new exception with a composed message from the given exception
    and the message to be added. The exception stack trace is kept at a minimum."
-  [^Exception exception ^String message]
+  [^Throwable exception ^String message]
   (let [klass  (class exception) 
         previous-msg (.getMessage exception)
-        composed-msg(str previous-msg (if-not (.endsWith previous-msg "\n") "\n") message (if-not (.endsWith message "\n") "\n"))
-        ctor (.getConstructor klass (into-array [java.lang.String]))
-        new-exception ^Exception (cast klass (.newInstance ctor (into-array String [composed-msg])))
+        composed-msg (str previous-msg (if-not (.endsWith previous-msg "\n") "\n") message (if-not (.endsWith message "\n") "\n"))
+        ctor (.getConstructor klass (into-array [(if (= klass java.lang.AssertionError)
+                                                   java.lang.Object
+                                                   java.lang.String)]))
+        new-exception ^Throwable (cast klass (.newInstance ctor (into-array String [composed-msg])))
         new-stack-trace (into-array java.lang.StackTraceElement [(aget (.getStackTrace exception) 0)])
         _ (.setStackTrace new-exception new-stack-trace)]
      new-exception))
@@ -223,7 +225,7 @@ such as clojure.core/+"
     (trace-form* form)
     `(try
        ~(trace-form* form)
-       (catch Exception e#
+       (catch Throwable e#
          (throw (trace-compose-exception e# (format "  Form failed: %s" (with-out-str (pprint '~form)))))))))
 
 (defmacro trace-forms
