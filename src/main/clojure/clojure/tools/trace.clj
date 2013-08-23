@@ -19,7 +19,7 @@
 ;;
 ;;  Aug 23thd, 2013: Luc Préfontaine
 ;;
-;;  * Fixed crashing throwable tracing when no string based constructor exists
+;;  * Fixed crash of throwable tracing when no string based constructor exists
 ;;
 ;;  December 1st, 2012: Luc Préfontaine
 ;;

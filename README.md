@@ -71,7 +71,7 @@ Change Log
 ====================
 
 * Release 0.7.6 Aug 23, 2013: Luc Préfontaine
-  * Fixed crashing throwable tracing when no string based constructor exists
+  * Fixed crash of throwable tracing when no string based constructor exists
 
 * Release 0.7.5 Dec 1, 2012: Luc Préfontaine
   * Fixed README and comments in source file
