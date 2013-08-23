@@ -17,8 +17,13 @@
 ;;
 ;;  CHANGE LOG
 ;;
+;;  Aug 23thd, 2013: Luc Préfontaine
+;;
+;;  * Fixed crashing throwable tracing when no string based constructor exists
+;;
 ;;  December 1st, 2012: Luc Préfontaine
 ;;
+;;  * Fixed README and comments in source file
 ;;  * fixed changelog and readme
 ;;  * added traced? and traceable/ fns
 ;;  * removed reflection warnings
