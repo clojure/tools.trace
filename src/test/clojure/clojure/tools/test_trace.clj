@@ -37,6 +37,20 @@
   (is (thrown-with-msg? ArithmeticException #"Divide by zero\n  Form failed: \(/ 9 a\)\n  Form failed: \(let\* \[a 0 b \(/ 9 a\)\] b\)\n  Form failed: \(let \[a 0 b \(/ 9 a\)\] b\)"
                         (trace-forms (let [a 0 b (/ 9 a)] b)))))
 
+(deftest test-throwables
+  (is (thrown-with-msg? AssertionError #"Assert failed: \(\= 2 3\)\n  Form failed: \(assert \(\= 2 3\)\)"
+                        (trace-forms (assert (= 2 3)))))
+  (is (thrown? java.lang.ThreadDeath
+                        (trace-forms (throw (java.lang.ThreadDeath.)))))
+  (is (thrown-with-msg? java.nio.charset.CoderMalfunctionError #"Any string would do"
+                        (trace-forms (throw (java.nio.charset.CoderMalfunctionError. (Exception. "Any string would do"))))))
+  (is (thrown?  java.io.IOError
+                         (trace-forms (throw (java.io.IOError. (Throwable. "Any string would do"))))))
+  (is (thrown-with-msg? Throwable #"Any string would do"
+                        (trace-forms (throw (Throwable. "Any string would do")))))
+  (is (thrown-with-msg? Exception #"Any string would do"
+                        (trace-forms (throw (Exception. "Any string would do")))))) 
+
 (deftest test-fn-form
   (is (thrown-with-msg? ArithmeticException #"Divide by zero\n  Form failed: \(\(fn \[\] \(let \[d \(/ 3 0\)\] d\)\)\)"
                         (fn-fn 1 2 3))))
