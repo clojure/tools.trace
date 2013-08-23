@@ -61,8 +61,8 @@
       *trace-depth* 0)
 
 (def ^{:doc "Forms to ignore when tracing forms." :private true}
-      ignored-form? '#{def quote var try monitor-enter monitor-exit})
-
+      ignored-form? '#{def quote var try monitor-enter monitor-exit assert})
+    
 (defn ^{:private true} tracer
   "This function is called by trace. Prints to standard output, but
 may be rebound to do anything you like. 'name' is optional."
@@ -203,18 +203,90 @@ such as clojure.core/+"
           sform)))
     (trace-value form)))
 
-(defn ^{:skip-wiki true} trace-compose-exception 
-  "Re-create a new exception with a composed message from the given exception
+(defprotocol ThrowableRecompose
+  "Protocol to isolate trace-form from convoluted throwables that 
+   do not have a constructor with a single string argument.
+
+   clone-throwable attempts to clone a throwable with a human readable stack trace
+   and message :)
+   It must return a throwable of the same class. If not clonable, the original
+   throwable should be returned. At least this will preserve the original 
+   throwable information.
+
+   Cloning should be non-obtrusive hence internal exceptions should be silently
+   swallowed and return the original throwable."
+  (clone-throwable [this stack-trace args]))
+
+(extend-type java.lang.AssertionError
+  ThrowableRecompose
+  (clone-throwable [this stack-trace args]
+    (try
+      (let [ctor (.getConstructor java.lang.AssertionError (into-array [java.lang.Object]))
+            arg (first args)]
+        (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace)))
+      (catch Exception e# this))))
+
+(extend-type java.nio.charset.CoderMalfunctionError
+  ThrowableRecompose
+  (clone-throwable [this stack-trace args] 
+    (try
+      (let [ctor (.getConstructor java.nio.charset.CoderMalfunctionError (into-array [java.lang.Exception]))
+            arg (first args)]
+        (cond
+          (instance? java.lang.Exception arg)      
+          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          (string? arg)
+          (doto (.newInstance ctor (into-array [(Exception. arg)])) (.setStackTrace stack-trace))
+          :else this))
+      (catch Exception e# this))))
+
+(extend-type java.io.IOError
+  ThrowableRecompose
+  (clone-throwable [this stack-trace args] 
+    (try
+      (let [ctor (.getConstructor java.io.IOError (into-array [java.lang.Throwable]))
+            arg (first args)]
+        (cond
+          (instance? java.lang.Throwable (first arg))
+          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          
+          (string? arg)
+          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
+          :else this))
+      (catch Exception e# this))))  
+
+(extend-type java.lang.ThreadDeath
+  ThrowableRecompose
+  (clone-throwable [this _ _] this)) ;; No way we can add more info here, this one has no args to its constructor
+
+(extend-type java.lang.Throwable
+  ThrowableRecompose
+  (clone-throwable [this stack-trace args] 
+    (try
+      (let [ctor (.getConstructor (class this) (into-array [java.lang.String]))
+            arg (first args)]
+        (string? arg)
+        (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+        :else (doto (.newInstance ctor (into-array [(str arg)])) (.setStackTrace stack-trace)))
+      (catch Exception e# this))))
+
+(extend-type java.lang.Object
+  ThrowableRecompose
+  (ctor-select [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
+
+(extend-type nil
+  ThrowableRecompose
+  (ctor-select [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
+
+(defn ^{:skip-wiki true} trace-compose-throwable 
+  "Re-create a new throwable with a composed message from the given throwable
    and the message to be added. The exception stack trace is kept at a minimum."
-  [^Exception exception ^String message]
-  (let [klass  (class exception) 
-        previous-msg (.getMessage exception)
-        composed-msg(str previous-msg (if-not (.endsWith previous-msg "\n") "\n") message (if-not (.endsWith message "\n") "\n"))
-        ctor (.getConstructor klass (into-array [java.lang.String]))
-        new-exception ^Exception (cast klass (.newInstance ctor (into-array String [composed-msg])))
-        new-stack-trace (into-array java.lang.StackTraceElement [(aget (.getStackTrace exception) 0)])
-        _ (.setStackTrace new-exception new-stack-trace)]
-     new-exception))
+  [^Throwable throwable ^String message]
+  (let [previous-msg (or (.getMessage throwable) (format ": No message attached to throwable %s" throwable))
+        composed-msg (str previous-msg (if-not (.endsWith previous-msg "\n") "\n") message (if-not (.endsWith message "\n") "\n"))
+        new-stack-trace (into-array java.lang.StackTraceElement [(aget (.getStackTrace throwable) 0)])
+        new-throwable (clone-throwable throwable new-stack-trace [composed-msg])]
+    new-throwable))
 
 (defn ^{:skip-wiki true} trace-form
   "Trace the given form avoiding try catch when recur is present in the form."
@@ -223,8 +295,8 @@ such as clojure.core/+"
     (trace-form* form)
     `(try
        ~(trace-form* form)
-       (catch Exception e#
-         (throw (trace-compose-exception e# (format "  Form failed: %s" (with-out-str (pprint '~form)))))))))
+       (catch Throwable e#
+         (throw (trace-compose-throwable e# (format "  Form failed: %s" (with-out-str (pprint '~form)))))))))
 
 (defmacro trace-forms
   "Trace all the forms in the given body. Returns any underlying uncaught exceptions that may make the forms fail."
