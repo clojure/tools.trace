@@ -240,20 +240,22 @@ such as clojure.core/+"
           :else this))
       (catch Exception e# this))))
 
-(extend-type java.io.IOError
-  ThrowableRecompose
-  (clone-throwable [this stack-trace args] 
-    (try
-      (let [ctor (.getConstructor java.io.IOError (into-array [java.lang.Throwable]))
-            arg (first args)]
-        (cond
-          (instance? java.lang.Throwable (first arg))
-          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
-          
-          (string? arg)
-          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
-          :else this))
-      (catch Exception e# this))))  
+;; The following should be re-enabled when Java 5 support is dropped.
+
+;(extend-type java.io.IOError
+;  ThrowableRecompose
+;  (clone-throwable [this stack-trace args] 
+;    (try
+;      (let [ctor (.getConstructor java.io.IOError (into-array [java.lang.Throwable]))
+;            arg (first args)]
+;        (cond
+;          (instance? java.lang.Throwable (first arg))
+;          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+;          
+;          (string? arg)
+;          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
+;          :else this))
+;      (catch Exception e# this))))  
 
 (extend-type java.lang.ThreadDeath
   ThrowableRecompose
