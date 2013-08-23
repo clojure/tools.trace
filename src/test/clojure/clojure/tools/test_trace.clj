@@ -44,8 +44,9 @@
                         (trace-forms (throw (java.lang.ThreadDeath.)))))
   (is (thrown-with-msg? java.nio.charset.CoderMalfunctionError #"Any string would do"
                         (trace-forms (throw (java.nio.charset.CoderMalfunctionError. (Exception. "Any string would do"))))))
-  (is (thrown?  java.io.IOError
-                         (trace-forms (throw (java.io.IOError. (Throwable. "Any string would do"))))))
+;; Re-enable this test when Java 5 support is dropped
+;  (is (thrown?  java.io.IOError
+;                         (trace-forms (throw (java.io.IOError. (Throwable. "Any string would do"))))))
   (is (thrown-with-msg? Throwable #"Any string would do"
                         (trace-forms (throw (Throwable. "Any string would do")))))
   (is (thrown-with-msg? Exception #"Any string would do"
