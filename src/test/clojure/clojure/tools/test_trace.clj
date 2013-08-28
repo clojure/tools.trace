@@ -88,6 +88,15 @@
   (untrace-ns trace-ns-test-namespace)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
 
+(deftest trace-applies-once
+  (trace-vars trace.test.namesp/bar)
+  (trace-vars trace.test.namesp/bar)
+  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
+         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# => :foo|"))
+  (untrace-ns trace-ns-test-namespace)
+  (is (with-out-str (trace.test.namesp/bar)) "")
+  (is (not (traced? 'trace.test.namesp/bar))))
+
 (deftest istraced
   (is (not (traced? 'trace.test.namesp/bar)))
   (trace-vars trace.test.namesp/bar)

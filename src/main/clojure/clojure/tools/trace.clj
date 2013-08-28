@@ -126,7 +126,7 @@ such as clojure.core/+"
                                   (trace-fn-call '~fname f# args#)))))]
      ~@exprs))
 
-(declare trace-form)
+(declare trace-form traced?)
 (defmulti trace-special-form (fn [form] (first form)))
 
 (defn ^{:private true} trace-bindings
@@ -327,7 +327,8 @@ such as clojure.core/+"
      (let [^clojure.lang.Var v (if (var? v) v (resolve v))
            ns (.ns v)
            s  (.sym v)]
-       (if (and (ifn? @v) (-> v meta :macro not))
+       (if (and (ifn? @v) (-> v meta :macro not)
+                          (not (traced? v)))
          (let [f @v
                vname (symbol (str ns "/" s))]
            (doto v
