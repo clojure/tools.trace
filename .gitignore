@@ -60,6 +60,7 @@ local.properties
 # leinigen
 .lein-deps-sum
 .lein-failures
+.lein-repl-history
 lib/**
 
 /bin
