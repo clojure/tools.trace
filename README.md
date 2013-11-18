@@ -46,7 +46,7 @@ Example Usage
 
 (trace-forms (+ 1 3) (* 5 6) (/ 1 0))
 
-(trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
+(trace-ns 'myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns 'myown.namespace)
 
 (trace-vars myown.namespace/fubar) ;; To dynamically trace/untrace specific fns (untrace-vars myown.namespace/fubar)
  
@@ -63,7 +63,7 @@ Developer Information
 
 * [Continuous Integration](http://build.clojure.org/job/tools.trace/)
 
-* [http://build.clojure.org/job/tools.trace-test-matrix/)
+* http://build.clojure.org/job/tools.trace-test-matrix/
 
 
 
