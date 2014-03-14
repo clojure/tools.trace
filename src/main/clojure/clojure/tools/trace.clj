@@ -108,7 +108,7 @@ symbol name of the function."
   (let [doc-string (if (string? (first definition)) (first definition) "")
         fn-form  (if (string? (first definition)) (rest definition) definition)]
     `(do
-       (def ~name)
+       (declare ~name)
        (let [f# (fn ~@fn-form)]
          (defn ~name ~doc-string [& args#]
            (trace-fn-call '~name f# args#))))))
@@ -272,9 +272,10 @@ such as clojure.core/+"
     (try
       (let [ctor (.getConstructor (class this) (into-array [java.lang.String]))
             arg (first args)]
-        (string? arg)
-        (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
-        :else (doto (.newInstance ctor (into-array [(str arg)])) (.setStackTrace stack-trace)))
+        (cond
+          (string? arg)
+          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          :else (doto (.newInstance ctor (into-array [(str arg)])) (.setStackTrace stack-trace))))
       (catch Exception e# this))))
 
 (extend-type java.lang.Object
@@ -327,7 +328,7 @@ such as clojure.core/+"
      (let [^clojure.lang.Var v (if (var? v) v (resolve v))
            ns (.ns v)
            s  (.sym v)]
-       (if (and (ifn? @v) (-> v meta :macro not))
+       (if (and (ifn? @v) (-> v meta :macro not) (-> v meta ::traced not))
          (let [f @v
                vname (symbol (str ns "/" s))]
            (doto v
@@ -377,7 +378,7 @@ such as clojure.core/+"
   [ns]
   (let [ns (the-ns ns)]
     (when-not ('#{clojure.core clojure.tools.trace} (.name ns))
-      (let [ns-fns (->> ns ns-interns vals)]
+      (let [ns-fns (->> ns ns-interns vals (filter (comp fn? var-get)))]
         (doseq [f ns-fns]
           (trace-var* f))))))
 

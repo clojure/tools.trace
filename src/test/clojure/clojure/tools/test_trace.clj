@@ -65,7 +65,8 @@
 (binding [*ns* trace-ns-test-namespace]
   (eval '(clojure.core/refer-clojure))
   (eval '(defn foo [] :foo))
-  (eval '(defn bar [] (foo))))
+  (eval '(defn bar [] (foo)))
+  (eval '(def baz :baz)))
 
 (deftest test-trace-foo
   (trace-vars trace.test.namesp/bar)
@@ -92,9 +93,21 @@
   (is (not (traced? 'trace.test.namesp/bar)))
   (trace-vars trace.test.namesp/bar)
   (is (traced? 'trace.test.namesp/bar))
-  (untrace-vars trace.test.namesp/bar))
+  (trace-vars trace.test.namesp/bar)
+  (trace-vars trace.test.namesp/bar)
+  (trace-vars trace.test.namesp/bar)
+  (untrace-vars trace.test.namesp/bar)
+  (is (not (traced? 'trace.test.namesp/bar))))
+
+(deftest test-trace-ns-does-not-trace-non-fns
+  (is (not (traced? 'trace.test.namesp/bar)))
+  (is (not (traced? 'trace.test.namesp/baz)))
+  (trace-ns trace-ns-test-namespace)
+  (is (traced? 'trace.test.namesp/bar))
+  (is (not (traced? 'trace.test.namesp/baz)))
+  (untrace-ns trace-ns-test-namespace)
+  (is (not (traced? 'trace.test.namesp/bar)))
+  (is (not (traced? 'trace.test.namesp/baz))))
 
 (deftest istraceable
   (is (traceable? 'trace.test.namesp/bar)))
-
-(run-tests)
