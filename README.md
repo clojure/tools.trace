@@ -10,7 +10,7 @@ Formerly known as clojure.contrib.trace.
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.7.6
+Latest stable release: 0.7.8
 
 * [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
@@ -19,7 +19,7 @@ Latest stable release: 0.7.6
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
-    [org.clojure/tools.trace "0.7.6"]
+    [org.clojure/tools.trace "0.7.8"]
 ```
     
 [Maven](http://maven.apache.org/) dependency information:
@@ -27,7 +27,7 @@ Latest stable release: 0.7.6
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
-      <version>0.7.6</version>
+      <version>0.7.8</version>
     </dependency>
 ```
 
@@ -69,6 +69,15 @@ Developer Information
 
 Change Log
 ====================
+* Release 0.7.8 March 15, 2013: Luc Préfontaine
+  * Fixed README
+
+* Release 0.7.7 March 14, 2013: Luc Préfontaine
+  * Replaced def by declare in deftrace macro
+  * Remove unnecessary call to run-tests in test suite
+  * Trace only functions in trace-vars*
+  * Added missing cond in clone-throwable on a Throwable
+  * Do not allow trace-vars* to reapply tracing on an already traced function
 
 * Release 0.7.6 Aug 23, 2013: Luc Préfontaine
   * Fixed crash of throwable tracing when no string based constructor exists
