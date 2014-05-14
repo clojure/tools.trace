@@ -36,15 +36,28 @@ Latest stable release: 0.7.8
 Example Usage
 ========================================
 ```clojure
-(use 'clojure.tools.trace)
+=> (use 'clojure.tools.trace)
 
-(trace (* 2 3)) ;; To trace a value
+=> (trace (* 2 3)) ;; To trace a value
+TRACE: 6
+6
 
-(trace tag (* 2 3)) ;; To trace a value and assign a trace tag
+=> (trace "tag" (* 2 3)) ;; To trace a value and assign a trace tag
+TRACE tag: 6
+6
 
-(deftrace fubar [x v] (+ x v)) ;; To trace a function call and its return value
+=> (deftrace fubar [x v] (+ x v)) ;; To trace a function call and its return value
+=> (fubar 2 3)
+TRACE t1107: (fubar 2 3)
+TRACE t1107: => 5
+5
 
-(trace-forms (+ 1 3) (* 5 6) (/ 1 0))
+=> (do (+ 1 3) (* 5 6) (/ 1 0))
+ArithmeticException Divide by zero  clojure.lang.Numbers.divide (Numbers.java:156)
+=> (trace-forms (+ 1 3) (* 5 6) (/ 1 0)) ;; To identify which form is failing
+ArithmeticException Divide by zero
+  Form failed: (/ 1 0)
+  clojure.lang.Numbers.divide (Numbers.java:156)
 
 (trace-ns myown.namespace) ;; To dynamically trace/untrace all fns in a name space (untrace-ns myown.namespace)
 
