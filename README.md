@@ -5,6 +5,7 @@ A Clojure trace tool. Defines tracing macros/fns to help you see what your code 
 
 Formerly known as clojure.contrib.trace.
 
+See the [tools.trace API Reference](http://clojure.github.io/tools.trace/).
 
 
 Releases and Dependency Information
