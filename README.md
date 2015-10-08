@@ -83,35 +83,35 @@ Developer Information
 
 Change Log
 ====================
-* Release 0.7.9 October 8, 2015: Luc Préfontaine
+* Release 0.7.9 October 8, 2015:
   * Closed TTRACE-11, trace-vars/untrace-vars now accept vars
   * Closed TTRACE-12, move away from Java 5, extend some new throwables with ThrowableRecompose  
   * Added more tests for TTRACE-12
 
-* Release 0.7.8 March 15, 2013: Luc Préfontaine
+* Release 0.7.8 March 15, 2013:
   * Fixed README
 
-* Release 0.7.7 March 14, 2013: Luc Préfontaine
+* Release 0.7.7 March 14, 2013:
   * Replaced def by declare in deftrace macro
   * Remove unnecessary call to run-tests in test suite
   * Trace only functions in trace-vars*
   * Added missing cond in clone-throwable on a Throwable
   * Do not allow trace-vars* to reapply tracing on an already traced function
 
-* Release 0.7.6 Aug 23, 2013: Luc Préfontaine
+* Release 0.7.6 Aug 23, 2013:
   * Fixed crash of throwable tracing when no string based constructor exists
 
-* Release 0.7.5 Dec 1, 2012: Luc Préfontaine
+* Release 0.7.5 Dec 1, 2012:
   * Fixed README and comments in source file
 
-* Release 0.7.4 Dec 1, 2012: Luc Préfontaine
+* Release 0.7.4 Dec 1, 2012:
   * added traced? and traceable/ fns
   * removed reflection warnings
   
-* Release 0.7.3 March 4, 2012: Luc Préfontaine
+* Release 0.7.3 March 4, 2012:
   * added macro wrappers around fns allowing dynamic tracing.
 
-* Release 0.7.2 Feb. 20, 2012: Luc Préfontaine
+* Release 0.7.2 Feb. 20, 2012:
   * added contribution from Michał Marczyk and Don Jackson to allow dynamic tracing of fn vars and all fns in a given namespace.
 * Release 0.7.1 on 2011-09-18
   * moved it to new contrib modular struct
