@@ -75,6 +75,13 @@
   (untrace-vars trace.test.namesp/bar)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
 
+(deftest test-trace-foo-var
+  (trace-vars (var trace.test.namesp/bar))
+  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
+         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# => :foo|"))
+  (untrace-vars (var trace.test.namesp/bar))
+  (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+
 (deftest test-trace-all
   (trace-vars trace.test.namesp/bar trace.test.namesp/foo)
   (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
@@ -111,3 +118,12 @@
 
 (deftest istraceable
   (is (traceable? 'trace.test.namesp/bar)))
+
+(deftest test-clone-throwable
+  (let [stack-trace (into-array [(java.lang.StackTraceElement. "test-trace" "test-clone-throweable" "test-trace.clj" 123)])
+        args ["test-arg"]]
+    (is (instance? java.lang.AssertionError (clone-throwable (java.lang.AssertionError. true) stack-trace args)))
+    (is (instance? java.nio.charset.CoderMalfunctionError (clone-throwable (java.nio.charset.CoderMalfunctionError. (Exception. "test")) stack-trace args)))
+    (is (instance? java.io.IOError (clone-throwable (java.io.IOError. (Throwable. "test")) stack-trace args)))
+    (is (instance? java.lang.ThreadDeath (clone-throwable (java.lang.ThreadDeath.) stack-trace args)))
+    (is (instance? java.lang.Throwable (clone-throwable (java.lang.Throwable. "test") stack-trace args)))))

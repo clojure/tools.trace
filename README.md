@@ -11,7 +11,7 @@ See the [tools.trace API Reference](http://clojure.github.io/tools.trace/).
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.7.8
+Latest stable release: 0.7.9
 
 * [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
@@ -20,7 +20,7 @@ Latest stable release: 0.7.8
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
-    [org.clojure/tools.trace "0.7.8"]
+    [org.clojure/tools.trace "0.7.9"]
 ```
     
 [Maven](http://maven.apache.org/) dependency information:
@@ -83,6 +83,11 @@ Developer Information
 
 Change Log
 ====================
+* Release 0.7.9 October 8, 2015: Luc Préfontaine
+  * Closed TTRACE-11, trace-vars/untrace-vars now accept vars
+  * Closed TTRACE-12, move away from Java 5, extend some new throwables with ThrowableRecompose  
+  * Added more tests for TTRACE-12
+
 * Release 0.7.8 March 15, 2013: Luc Préfontaine
   * Fixed README
 

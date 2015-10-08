@@ -245,22 +245,20 @@ such as clojure.core/+"
           :else this))
       (catch Exception e# this))))
 
-;; The following should be re-enabled when Java 5 support is dropped.
-
-;(extend-type java.io.IOError
-;  ThrowableRecompose
-;  (clone-throwable [this stack-trace args] 
-;    (try
-;      (let [ctor (.getConstructor java.io.IOError (into-array [java.lang.Throwable]))
-;            arg (first args)]
-;        (cond
-;          (instance? java.lang.Throwable (first arg))
-;          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
-;          
-;          (string? arg)
-;          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
-;          :else this))
-;      (catch Exception e# this))))  
+(extend-type java.io.IOError
+  ThrowableRecompose
+  (clone-throwable [this stack-trace args] 
+    (try
+      (let [ctor (.getConstructor java.io.IOError (into-array [java.lang.Throwable]))
+            arg (first args)]
+        (cond
+          (instance? java.lang.Throwable (first arg))
+          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          
+          (string? arg)
+          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
+          :else this))
+      (catch Exception e# this))))  
 
 (extend-type java.lang.ThreadDeath
   ThrowableRecompose
@@ -359,7 +357,10 @@ such as clojure.core/+"
   The arguments may be Var objects or symbols to be resolved in the current
   namespace."
   [& vs]
-  `(do ~@(for [x vs] `(trace-var* (quote ~x)))))
+  `(do ~@(for [x vs] 
+           `(if (var? ~x)
+              (trace-var* ~x)
+              (trace-var* (quote ~x))))))
 
 (defmacro untrace-vars
   "Untrace each of the specified Vars.
@@ -367,7 +368,10 @@ such as clojure.core/+"
   of the arguments, replacing the traced functions with the original,
   untraced versions."
   [& vs]
- `(do ~@(for [x vs] `(untrace-var* (quote ~x)))))
+  `(do ~@(for [x vs]
+           `(if (var? ~x)
+              (untrace-var* ~x)
+              (untrace-var* (quote ~x))))))
 
 (defn ^{:skip-wiki true} trace-ns*
   "Replaces each function from the given namespace with a version wrapped
