@@ -113,11 +113,13 @@ Change Log
 
 * Release 0.7.2 Feb. 20, 2012:
   * added contribution from Michał Marczyk and Don Jackson to allow dynamic tracing of fn vars and all fns in a given namespace.
+  
 * Release 0.7.1 on 2011-09-18
   * moved it to new contrib modular struct
   * made it 1.2/1.3 compliant
   * supported doc strings
   * added a trace-form macro, from Jonathan Fischer
+  
 * Changes from clojure.trace
   * replaced *trace-out* with tracer
   * made trace a function instead of a macro (suggestion from Stuart Halloway)
