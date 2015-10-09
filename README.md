@@ -83,6 +83,9 @@ Developer Information
 
 Change Log
 ====================
+* Release 0.7.10-SNAPSHOT October 8, 2015:
+  * Closed TTRACE-13, trace-ns macro accept both quoted or unquoted namespace argument
+  
 * Release 0.7.9 October 8, 2015:
   * Closed TTRACE-11, trace-vars/untrace-vars now accept vars
   * Closed TTRACE-12, move away from Java 5, extend some new throwables with ThrowableRecompose  

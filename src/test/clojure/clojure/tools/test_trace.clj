@@ -1,7 +1,7 @@
 (ns clojure.tools.test-trace
   "Tests for tools.trace."
   [:use [clojure.test] [clojure.tools.trace]]
-  [:require [clojure.string :as s]])
+  [:require [clojure.tools.test-dummy-namespace] [clojure.string :as s]])
 
 (defn ^{:private true}
        cleanup
@@ -60,64 +60,72 @@
   (is (thrown-with-msg? ArithmeticException #"Divide by zero\n  Form failed: \(/ 3 0\)\n  Form failed: \{:a 1, :b \(/ 3 0\)\}"
                         (trace-forms {:a 1 :b (/ 3 0)}))))
 
-(def trace-ns-test-namespace (create-ns 'trace.test.namesp))
-
-(binding [*ns* trace-ns-test-namespace]
-  (eval '(clojure.core/refer-clojure))
-  (eval '(defn foo [] :foo))
-  (eval '(defn bar [] (foo)))
-  (eval '(def baz :baz)))
+(def trace-ns-test-namespace 'clojure.tools.test-dummy-namespace)
 
 (deftest test-trace-foo
-  (trace-vars trace.test.namesp/bar)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# => :foo|"))
-  (untrace-vars trace.test.namesp/bar)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+  (trace-vars clojure.tools.test-dummy-namespace/bar)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# => :foo|"))
+  (untrace-vars clojure.tools.test-dummy-namespace/bar)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
 
 (deftest test-trace-foo-var
-  (trace-vars (var trace.test.namesp/bar))
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# => :foo|"))
-  (untrace-vars (var trace.test.namesp/bar))
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+  (trace-vars (var clojure.tools.test-dummy-namespace/bar))
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# => :foo|"))
+  (untrace-vars (var clojure.tools.test-dummy-namespace/bar))
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
 
 (deftest test-trace-all
-  (trace-vars trace.test.namesp/bar trace.test.namesp/foo)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|" ))
-  (untrace-vars trace.test.namesp/bar trace.test.namesp/foo)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+  (trace-vars clojure.tools.test-dummy-namespace/bar clojure.tools.test-dummy-namespace/foo)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# | (clojure.tools.test-dummy-namespace/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|" ))
+  (untrace-vars clojure.tools.test-dummy-namespace/bar clojure.tools.test-dummy-namespace/foo)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
 
-(deftest test-trace-ns
+(deftest test-trace-ns-var
   (trace-ns trace-ns-test-namespace)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar)))
-         "TRACE t:# (trace.test.namesp/bar)|TRACE t:# | (trace.test.namesp/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# | (clojure.tools.test-dummy-namespace/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
   (untrace-ns trace-ns-test-namespace)
-  (is (= (cleanup (with-out-str (trace.test.namesp/bar))) "")))
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
+
+(deftest test-trace-ns-quoted
+  (trace-ns 'clojure.tools.test-dummy-namespace)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# | (clojure.tools.test-dummy-namespace/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
+  (untrace-ns 'clojure.tools.test-dummy-namespace)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
+
+(deftest test-trace-ns-unquoted
+  (trace-ns clojure.tools.test-dummy-namespace)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar)))
+         "TRACE t:# (clojure.tools.test-dummy-namespace/bar)|TRACE t:# | (clojure.tools.test-dummy-namespace/foo)|TRACE t:# | => :foo|TRACE t:# => :foo|"))
+  (untrace-ns clojure.tools.test-dummy-namespace)
+  (is (= (cleanup (with-out-str (clojure.tools.test-dummy-namespace/bar))) "")))
 
 (deftest istraced
-  (is (not (traced? 'trace.test.namesp/bar)))
-  (trace-vars trace.test.namesp/bar)
-  (is (traced? 'trace.test.namesp/bar))
-  (trace-vars trace.test.namesp/bar)
-  (trace-vars trace.test.namesp/bar)
-  (trace-vars trace.test.namesp/bar)
-  (untrace-vars trace.test.namesp/bar)
-  (is (not (traced? 'trace.test.namesp/bar))))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/bar)))
+  (trace-vars clojure.tools.test-dummy-namespace/bar)
+  (is (traced? 'clojure.tools.test-dummy-namespace/bar))
+  (trace-vars clojure.tools.test-dummy-namespace/bar)
+  (trace-vars clojure.tools.test-dummy-namespace/bar)
+  (trace-vars clojure.tools.test-dummy-namespace/bar)
+  (untrace-vars clojure.tools.test-dummy-namespace/bar)
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/bar))))
 
 (deftest test-trace-ns-does-not-trace-non-fns
-  (is (not (traced? 'trace.test.namesp/bar)))
-  (is (not (traced? 'trace.test.namesp/baz)))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/bar)))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/baz)))
   (trace-ns trace-ns-test-namespace)
-  (is (traced? 'trace.test.namesp/bar))
-  (is (not (traced? 'trace.test.namesp/baz)))
+  (is (traced? 'clojure.tools.test-dummy-namespace/bar))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/baz)))
   (untrace-ns trace-ns-test-namespace)
-  (is (not (traced? 'trace.test.namesp/bar)))
-  (is (not (traced? 'trace.test.namesp/baz))))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/bar)))
+  (is (not (traced? 'clojure.tools.test-dummy-namespace/baz))))
 
 (deftest istraceable
-  (is (traceable? 'trace.test.namesp/bar)))
+  (is (traceable? 'clojure.tools.test-dummy-namespace/bar)))
 
 (deftest test-clone-throwable
   (let [stack-trace (into-array [(java.lang.StackTraceElement. "test-trace" "test-clone-throweable" "test-trace.clj" 123)])

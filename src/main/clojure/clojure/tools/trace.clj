@@ -386,10 +386,23 @@ such as clojure.core/+"
         (doseq [f ns-fns]
           (trace-var* f))))))
 
+(defn ^{:private true} resolves-as-var?
+  "Try to resolve the symbol in several ways to find out if it's a var or not."
+  [n]
+  (cond
+    (coll? n) nil
+    (try (find-ns n) (catch Exception _)) nil
+    :else
+    (if-let [v (try (ns-resolve *ns* n) (catch Exception _))] (var? v))))
+
 (defmacro trace-ns
-  "Trace all fns in the given name space."
-  [ns]
-  `(trace-ns* ~ns)) 
+  "Trace all fns in the given name space. The given name space can be quoted, unquoted or stored in a var.
+   We must try to resolve the expression passed to us partially to find out if it needs to be quoted or not
+   when passed to trace-ns*"
+  [n]
+  (let [quote? (not (or (resolves-as-var? n) (and (coll? n) (= (first n) (quote quote)))))
+        n (if quote? (list 'quote n) n)]
+    `(trace-ns* ~n)))
 
 (defn ^{:skip-wiki true} untrace-ns*
   "Reverses the effect of trace-var / trace-vars / trace-ns for the
@@ -401,9 +414,13 @@ such as clojure.core/+"
           (untrace-var* f))))
 
 (defmacro untrace-ns
-  "Untrace all fns in the given name space."
-  [ns]
-  `(untrace-ns* ~ns))
+  "Untrace all fns in the given name space. The given name space can be quoted, unquoted or stored in a var.
+   We must try to resolve the expression passed to us partially to find out if it needs to be quoted or not
+   when passed to untrace-ns*"
+  [n]
+  (let [quote? (not (or (resolves-as-var? n) (and (coll? n) (= (first n) (quote quote)))))
+        n (if quote? (list 'quote n) n)]
+     `(untrace-ns* ~n)))
 
 (defn traced?
   "Returns true if the given var is currently traced, false otherwise"
