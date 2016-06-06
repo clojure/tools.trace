@@ -89,6 +89,9 @@ namespace.
       <a href="#clojure.tools.trace/untrace-vars" class="toc-entry-anchor">untrace-vars</a>
       
     </div>
+  </div><div class="toc-section" style="margin-left: 1em;">
+    <a style="margin-top: 3px;" href="#"></a>
+    
   </div>
 </div>
 </div>
@@ -132,6 +135,7 @@ swallowed and return the original throwable.</pre>
       <pre id="var-usage">Usage: (clone-throwable this stack-trace args)
 </pre>
       <pre id="var-docstr"></pre>
+      <pre id="var-specs"></pre>
       
       
       
@@ -156,6 +160,7 @@ swallowed and return the original throwable.</pre>
 arguments. Nested calls to deftrace'd functions will print a
 tree-like structure.
 The first argument of the form definition can be a doc string</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L102">Source</a>
@@ -170,6 +175,7 @@ The first argument of the form definition can be a doc string</pre>
 expressions in an environment in which the identifiers are bound to
 the traced functions. Does not work on inlined functions,
 such as clojure.core/+</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L116">Source</a>
@@ -184,6 +190,7 @@ such as clojure.core/+</pre>
     <pre id="var-docstr">Sends name (optional) and value to the tracer function, then
 returns value. May be wrapped around any expression without
 affecting the result.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L77">Source</a>
@@ -195,6 +202,7 @@ affecting the result.</pre>
     <pre id="var-usage">Usage: (trace-forms &amp; body)
 </pre>
     <pre id="var-docstr">Trace all the forms in the given body. Returns any underlying uncaught exceptions that may make the forms fail.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L307">Source</a>
@@ -208,6 +216,7 @@ affecting the result.</pre>
     <pre id="var-docstr">Trace all fns in the given name space. The given name space can be quoted, unquoted or stored in a var.
 We must try to resolve the expression passed to us partially to find out if it needs to be quoted or not
 when passed to trace-ns*</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L398">Source</a>
@@ -221,6 +230,7 @@ when passed to trace-ns*</pre>
     <pre id="var-docstr">Trace each of the specified Vars.
 The arguments may be Var objects or symbols to be resolved in the current
 namespace.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L355">Source</a>
@@ -232,6 +242,7 @@ namespace.</pre>
     <pre id="var-usage">Usage: (traceable? v)
 </pre>
     <pre id="var-docstr">Returns true if the given var can be traced, false otherwise</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L431">Source</a>
@@ -243,6 +254,7 @@ namespace.</pre>
     <pre id="var-usage">Usage: (traced? v)
 </pre>
     <pre id="var-docstr">Returns true if the given var is currently traced, false otherwise</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L425">Source</a>
@@ -256,6 +268,7 @@ namespace.</pre>
     <pre id="var-docstr">Untrace all fns in the given name space. The given name space can be quoted, unquoted or stored in a var.
 We must try to resolve the expression passed to us partially to find out if it needs to be quoted or not
 when passed to untrace-ns*</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L416">Source</a>
@@ -270,6 +283,7 @@ when passed to untrace-ns*</pre>
 Reverses the effect of trace-var / trace-vars / trace-ns for each
 of the arguments, replacing the traced functions with the original,
 untraced versions.</pre>
+    <pre id="var-specs"></pre>
     
     
     <a id="var-source" href="https://github.com/clojure/tools.trace/blob/d56cf7003f9cf024e1fd15ace0944e8b4793953d/src/main/clojure/clojure/tools/trace.clj#L365">Source</a>
