@@ -66,7 +66,10 @@ ArithmeticException Divide by zero
  
 ```
 
+API
+===
 
+See the [tools.trace API Reference](clojure.github.io/tools.trace/).
 
 Developer Information
 ========================================
