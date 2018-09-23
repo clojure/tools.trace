@@ -27,8 +27,8 @@
   (trace-forms ((fn [] (let [ d (/ 3 0)] d)))))
 
 (deftest test-with-docstring
-  (is (= (.endsWith ^String (cleanup (:doc (meta (var fn-a)))) "fn-a Doc string") true)
-  (is (= (cleanup (with-out-str (fn-a 1 2 3))) "TRACE t:# (fn-a 1 2 3)|TRACE t:# => 6|"))))
+  (is (= (.endsWith ^String (cleanup (:doc (meta (var fn-a)))) "fn-a Doc string") true))
+  (is (= (cleanup (with-out-str (fn-a 1 2 3))) "TRACE t:# (fn-a 1 2 3)|TRACE t:# => 6|")))
 
 (deftest test-no-docstring
   (is (= (cleanup (with-out-str (fn-b 1 2 3))) "TRACE t:# (fn-b 1 2 3)|TRACE t:# => 6|")))

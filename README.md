@@ -28,7 +28,7 @@ Latest stable release: 0.7.9
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
-      <version>0.7.8</version>
+      <version>0.7.9</version>
     </dependency>
 ```
 
@@ -141,3 +141,4 @@ be found in the file epl-v10.html at the root of this distribution.
 By using this software in any fashion, you are agreeing to be bound by
 the terms of this license.  You must not remove this notice, or any
 other, from this software.
+
