@@ -134,7 +134,7 @@ Change Log
 Copyright and License
 ========================================
 
-Copyright (c) Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, 2011-2012.
+Copyright (c) Stuart Sierra, Michel Salim, Luc Préfontaine, Jonathan Fischer Friberg, Michał Marczyk, Andy Fingerhut 2011-2018.
 All rights reserved.
 The use and distribution terms for this software are covered by the Eclipse Public
 License 1.0 (http://opensource.org/licenses/eclipse-1.0.php) which can
