@@ -1,0 +1,10 @@
+Hi! Thanks for your interest in contributing to this project.
+
+Clojure contrib projects do not use GitHub issues or pull requests.
+If you would like to discuss a problem or enhancement request, please
+file a question to discuss on https://ask.clojure.org and use the
+appropriate category under "Contrib libs". If necessary, a JIRA will
+be filed by a developer.
+
+For more information on contributing to Clojure projects, see:
+https://clojure.org/dev
