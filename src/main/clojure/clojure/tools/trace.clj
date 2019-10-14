@@ -81,7 +81,10 @@ affecting the result."
   ([value] (trace nil value))
   ([name value]
      (tracer name (pr-str value))
-     value))
+     value)
+  ([value name-k name]
+     (assert (= :name name-k))
+     (trace name value)))
 
 (defn ^{:private true} trace-indent
   "Returns an indentation string based on *trace-depth*"
