@@ -17,6 +17,11 @@ Latest stable release: 0.7.10
 
 * [Development Snapshot Versions](https://oss.sonatype.org/index.html#nexus-search;gav~org.clojure~tools.trace~~~)
 
+[CLI/`deps.edn`](https://clojure.org/reference/deps_and_cli) dependency information:
+```clojure
+org.clojure/tools.trace {:mvn/version "0.7.10"}
+```
+
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
