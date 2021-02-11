@@ -88,6 +88,10 @@ Developer Information
 
 Change Log
 ====================
+
+* Release next:
+  * Fixed reflection warnings with type hints
+
 * Release 0.7.10 September 23, 2018:
   * Closed TTRACE-16, applied fix from Andy Fingerhut, fixed typos in README, support Clojure 1.9, fixes to unit tests
   * Closed TTRACE-13, trace-ns macro accept both quoted or unquoted namespace argument
