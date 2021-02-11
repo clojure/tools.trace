@@ -228,7 +228,7 @@ such as clojure.core/+"
     (try
       (let [ctor (.getConstructor java.lang.AssertionError (into-array [java.lang.Object]))
             arg (first args)]
-        (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace)))
+        (doto ^AssertionError (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace)))
       (catch Exception e# this))))
 
 (extend-type java.nio.charset.CoderMalfunctionError
@@ -239,9 +239,9 @@ such as clojure.core/+"
             arg (first args)]
         (cond
           (instance? java.lang.Exception arg)      
-          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          (doto ^java.nio.charset.CoderMalfunctionError (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
           (string? arg)
-          (doto (.newInstance ctor (into-array [(Exception. arg)])) (.setStackTrace stack-trace))
+          (doto ^java.nio.charset.CoderMalfunctionError (.newInstance ctor (into-array [(Exception. ^String arg)])) (.setStackTrace stack-trace))
           :else this))
       (catch Exception e# this))))
 
@@ -253,10 +253,10 @@ such as clojure.core/+"
             arg (first args)]
         (cond
           (instance? java.lang.Throwable (first arg))
-          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          (doto ^java.io.IOError (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
           
           (string? arg)
-          (doto (.newInstance ctor (into-array [(Throwable. arg)])) (.setStackTrace stack-trace))
+          (doto ^java.io.IOError (.newInstance ctor (into-array [(Throwable. ^String arg)])) (.setStackTrace stack-trace))
           :else this))
       (catch Exception e# this))))  
 
@@ -272,8 +272,8 @@ such as clojure.core/+"
             arg (first args)]
         (cond
           (string? arg)
-          (doto (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
-          :else (doto (.newInstance ctor (into-array [(str arg)])) (.setStackTrace stack-trace))))
+          (doto ^java.lang.Throwable (.newInstance ctor (into-array [arg])) (.setStackTrace stack-trace))
+          :else (doto ^java.lang.Throwable (.newInstance ctor (into-array [(str arg)])) (.setStackTrace stack-trace))))
       (catch Exception e# this))))
 
 (extend-type java.lang.Object
