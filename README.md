@@ -77,12 +77,9 @@ Developer Information
 ========================================
 
 * [GitHub project](https://github.com/clojure/tools.trace)
-
-* [Bug Tracker](http://dev.clojure.org/jira/browse/TTRACE)
-
-* [Continuous Integration](http://build.clojure.org/job/tools.trace/)
-
-* [http://build.clojure.org/job/tools.trace-test-matrix/)
+* [Bug Tracker](https://clojure.atlassian.net/browse/TTRACE)
+* [Continuous Integration](https://build.clojure.org/job/tools.trace/)
+* [TestMatrix](https://build.clojure.org/job/tools.trace-test-matrix/)
 
 
 
