@@ -78,8 +78,7 @@ Developer Information
 
 * [GitHub project](https://github.com/clojure/tools.trace)
 * [Bug Tracker](https://clojure.atlassian.net/browse/TTRACE)
-* [Continuous Integration](https://build.clojure.org/job/tools.trace/)
-* [TestMatrix](https://build.clojure.org/job/tools.trace-test-matrix/)
+* [Continuous Integration](https://github.com/clojure/tools.trace/actions/workflows/test.yml)
 
 
 
