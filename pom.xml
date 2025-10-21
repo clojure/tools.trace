@@ -3,6 +3,7 @@
   <artifactId>tools.trace</artifactId>
   <version>0.8.1-SNAPSHOT</version>
   <name>${project.artifactId}</name>
+  <description>Tools for tracing Clojure functions and expressions.</description>
 
   <parent>
     <groupId>org.clojure</groupId>
