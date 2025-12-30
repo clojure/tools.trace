@@ -1,13 +1,13 @@
 (defproject tools.trace "0.7.9-SNAPSHOT"
   :description "A Clojure tracing facility in Clojure"
-  :parent [org.clojure/pom.contrib "0.1.2"]
+  :parent [org.clojure/pom.contrib "1.4.0"]
   :url "https://github.com/clojure/tools.trace"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :source-paths ["src/main/clojure"]
   :test-paths ["src/test/clojure"]
   :repositories {"sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"}
-  :dependencies [[org.clojure/clojure "1.9.0"]]
+  :dependencies [[org.clojure/clojure "1.11.4"]]
   :profiles {:1.2 {:dependencies [[org.clojure/clojure "1.2.0"]]}
              :1.3 {:dependencies [[org.clojure/clojure "1.3.0"]]}
              :1.4 {:dependencies [[org.clojure/clojure "1.4.0"]]}

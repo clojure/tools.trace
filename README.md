@@ -5,27 +5,27 @@ A Clojure trace tool. Defines tracing macros/fns to help you see what your code 
 
 Formerly known as clojure.contrib.trace.
 
-See the [tools.trace API Reference](http://clojure.github.io/tools.trace/).
+See the [tools.trace API Reference](https://clojure.github.io/tools.trace/).
 
 
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.8.0
+Latest stable release: 0.9.0
 
-* [All Released Versions](http://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
+* [All Released Versions](https://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
 * [Development Snapshot Versions](https://oss.sonatype.org/index.html#nexus-search;gav~org.clojure~tools.trace~~~)
 
 [CLI/`deps.edn`](https://clojure.org/reference/deps_and_cli) dependency information:
 ```clojure
-org.clojure/tools.trace {:mvn/version "0.8.0"}
+org.clojure/tools.trace {:mvn/version "0.9.0"}
 ```
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
-    [org.clojure/tools.trace "0.8.0"]
+    [org.clojure/tools.trace "0.9.0"]
 ```
     
 [Maven](http://maven.apache.org/) dependency information:
@@ -33,7 +33,7 @@ org.clojure/tools.trace {:mvn/version "0.8.0"}
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
-      <version>0.8.0</version>
+      <version>0.9.0</version>
     </dependency>
 ```
 
@@ -85,6 +85,8 @@ Developer Information
 Change Log
 ====================
 
+* Release 0.9.0 Dec 30, 2025:
+  * Update parent pom version
 * Release 0.8.0 Feb 19, 2024:
   * Update parent pom version
 * Release 0.7.11 Feb 11, 2021:
