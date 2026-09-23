@@ -11,7 +11,7 @@ See the [tools.trace API Reference](https://clojure.github.io/tools.trace/).
 Releases and Dependency Information
 ========================================
 
-Latest stable release: 0.9.0
+Latest stable release: 0.9.1
 
 * [All Released Versions](https://search.maven.org/#search|ga|1|g%3A%22org.clojure%22%20AND%20a%3A%22tools.trace%22)
 
@@ -19,13 +19,13 @@ Latest stable release: 0.9.0
 
 [CLI/`deps.edn`](https://clojure.org/reference/deps_and_cli) dependency information:
 ```clojure
-org.clojure/tools.trace {:mvn/version "0.9.0"}
+org.clojure/tools.trace {:mvn/version "0.9.1"}
 ```
 
 [Leiningen](https://github.com/technomancy/leiningen) dependency information:
 
 ```clojure
-    [org.clojure/tools.trace "0.9.0"]
+    [org.clojure/tools.trace "0.9.1"]
 ```
     
 [Maven](http://maven.apache.org/) dependency information:
@@ -33,7 +33,7 @@ org.clojure/tools.trace {:mvn/version "0.9.0"}
     <dependency>
       <groupId>org.clojure</groupId>
       <artifactId>tools.trace</artifactId>
-      <version>0.9.0</version>
+      <version>0.9.1</version>
     </dependency>
 ```
 
@@ -85,7 +85,7 @@ Developer Information
 Change Log
 ====================
 
-* next
+* Release 0.9.1 Sep 23, 2026:
   * Fix two protocol extensions extending the wrong method
 * Release 0.9.0 Dec 30, 2025:
   * Update parent pom version
