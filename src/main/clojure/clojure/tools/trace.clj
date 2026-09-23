@@ -278,11 +278,11 @@ such as clojure.core/+"
 
 (extend-type java.lang.Object
   ThrowableRecompose
-  (ctor-select [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
+  (clone-throwable [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
 
 (extend-type nil
   ThrowableRecompose
-  (ctor-select [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
+  (clone-throwable [this _ _] this)) ;; Obviously something is wrong but the trace should not alter processing
 
 (defn ^{:skip-wiki true} trace-compose-throwable 
   "Re-create a new throwable with a composed message from the given throwable
