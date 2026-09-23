@@ -85,6 +85,8 @@ Developer Information
 Change Log
 ====================
 
+* next
+  * Fix two protocol extensions extending the wrong method
 * Release 0.9.0 Dec 30, 2025:
   * Update parent pom version
 * Release 0.8.0 Feb 19, 2024:
